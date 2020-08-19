@@ -667,6 +667,12 @@ func ParseSPS(data []byte) (self SPSInfo, err error) {
 		}
 	}
 
+	// Assume 30 FPS by default, otherwise playback issues will occur (android streaming issue)
+	if self.FpsNum == 0 {
+		self.FpsNum = 30000
+		self.FpsDen = 1000
+	}
+
 	self.Width = (self.MbWidth * 16) - self.CropLeft*2 - self.CropRight*2
 	self.Height = ((2 - frame_mbs_only_flag) * self.MbHeight * 16) - self.CropTop*2 - self.CropBottom*2
 
